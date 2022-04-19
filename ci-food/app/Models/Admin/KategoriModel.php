@@ -7,6 +7,23 @@ use CodeIgniter\Model;
 class KategoriModel extends Model{
 
     protected $table = 'kategori';
+    protected $userTimestamps = true;
+    protected $allowedFields = ['nama_kategori', 'status'];
+
+    public function getRulesValidation($method)
+    {
+        $rulesValidation = [
+            'nama_kategori' => [
+                'label' => 'Nama Kategori',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} tidak boleh kosong',
+                ]
+            ],
+        ];
+
+        return $rulesValidation;
+    } 
     
     public function ajaxGetData($length, $start)
     {

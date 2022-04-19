@@ -1,5 +1,6 @@
 <script>
     var urlList = "<?= site_url('kategori/ajaxList'); ?>"; 
+    var urlSave = "<?= site_url('kategori/ajaxSave'); ?>";
 </script>
 <script src = "<?= base_url();?>/ajax/ajaxKategori.js "> </script>
 <section class="content-header">
@@ -26,7 +27,7 @@
         <div class="box-header">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" data-toggle="toooltip" title="Tambah Data">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" data-toggle="toooltip" title="Tambah Data" onclick="show()">
                         <i class="fa fa-plus"></i>
                     </a>
                     <a href="javascript:void(0)" class="btn btn-default btn-sm" data-toggle="toooltip" onclick="reload_table()" title="Refresh Data">
@@ -44,7 +45,6 @@
                         <th style="text-align:center;">Nama Kategori</th>
                         <th style="text-align:center;">Status</th>
                         <th style="text-align:center; width:15%;">Aksi</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -52,3 +52,5 @@
         </div>
     </div>
 </section>
+
+<?= $this->include('kategori/form'); ?>
