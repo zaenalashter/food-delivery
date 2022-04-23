@@ -4,6 +4,7 @@
     var urlEdit = "<?= site_url('kategori/ajaxEdit/'); ?>";
     var urlUpdate = "<?= site_url('kategori/ajaxUpdate'); ?>";
     var urlDelete = "<?= site_url('kategori/ajaxDelete/'); ?>";
+    var urlStatus = "<?= site_url('kategori/ajaxStatus/'); ?>";
 </script>
 <script src = "<?= base_url();?>/ajax/ajaxKategori.js "> </script>
 <section class="content-header">

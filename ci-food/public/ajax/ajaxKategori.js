@@ -111,7 +111,25 @@ function ajaxDelete(id){
                 }
             },
             error: function(jqXHR, textStatus, errorThrown){
-                error('Data gagal dihapus');
+            }
+        });
+    }
+}
+function ajaxStatus(id){
+    if(confirm('Apakah anda yakin untuk menguubah status?')){
+        $.ajax({
+            url : urlStatus + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data){
+                if(data.status){
+                    success('Status berhasil diubah');
+                    reload_table();
+                }else{
+                    error('Status gagal diubah');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
             }
         });
     }

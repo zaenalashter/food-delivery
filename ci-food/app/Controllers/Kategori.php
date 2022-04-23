@@ -64,21 +64,25 @@ class Kategori extends BaseController
         foreach ($list as $temp){
             $aksi = '
             <div class="text-center">
-            <a href="javascript:void(0)" class="btn btn-warning btn-sm" data-toggle="toooltip" title="Edit Data" onclick="ajaxEdit('.$temp['id'].')">
-                <i class="fa fa-pencil"></i>
-            </a>
-            <a href="javascript:void(0)" class="btn btn-danger btn-sm" data-toggle="toooltip" title="Edit Data" onclick="ajaxDelete('.$temp['id'].')">
-                <i class="fa fa-trash"></i>
-            </a>
+                <a href="javascript:void(0)" class="btn btn-warning btn-sm" data-toggle="toooltip" title="Edit Data" onclick="ajaxEdit('.$temp['id'].')">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <a href="javascript:void(0)" class="btn btn-danger btn-sm" data-toggle="toooltip" title="Edit Data" onclick="ajaxDelete('.$temp['id'].')">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </div>
+            ';
+            $status = '
+            <div class="text-center">
+                <a href="javascript:void(0)" data-toggle="toooltip" title="'.($temp['status'] == '0' ? 'Aktifkan' : 'Non-aktifkan').'" onclick="ajaxStatus('.$temp['id'].')"> '.formatStatus($temp['status']).'</a>
             </div>
             ';
 
             $row = [];
             $row[] = $no++;
             $row[] = $temp['nama_kategori'];
-            $row[] = formatStatus($temp['status']);
+            $row[] = $status;
             $row[] = $aksi;
-
             $data[] = $row;
         }
 
@@ -134,6 +138,25 @@ class Kategori extends BaseController
         }else{
             echo json_encode(['status' => false]);
         }
+    }
+
+    public function ajaxStatus($id)
+    {
+        $kategori = $this->kategori->find($id);
+        $data['id'] = $id;
+
+        if($kategori['status'] == '0'){
+            $data['status'] = '1';
+        }else{
+            $data['status'] = '0';
+        }
+
+        if($this->kategori->save($data)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+
     }
 
     public function _validate($method)
