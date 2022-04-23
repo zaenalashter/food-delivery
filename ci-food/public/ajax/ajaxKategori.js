@@ -73,3 +73,46 @@ function ajaxSave(){
         }
     });
 }
+
+function ajaxEdit(id){
+    save_method = 'edit';
+    $('#modal-form form')[0].reset();
+    $('.form-group').removeClass('has-error');
+    $('.help-block').empty();
+
+    $.ajax({
+        url : urlEdit + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data){
+            $('[name="id"]').val(data.id);
+            $('[name="nama_kategori"]').val(data.nama_kategori);
+            
+            $('#modal-form').modal('show');
+            $('.modal-title').text('Edit Kategori');
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        }
+    });
+}
+
+function ajaxDelete(id){
+    if(confirm('Apakah anda yakin akan menghapus data ini?')){
+        $.ajax({
+            url : urlDelete + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data){
+                if(data.status){
+                    success('Data berhasil dihapus');
+                    reload_table();
+                }else{
+                    error('Data gagal dihapus');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                error('Data gagal dihapus');
+            }
+        });
+    }
+}

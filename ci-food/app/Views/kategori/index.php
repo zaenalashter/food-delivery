@@ -1,6 +1,9 @@
 <script>
     var urlList = "<?= site_url('kategori/ajaxList'); ?>"; 
     var urlSave = "<?= site_url('kategori/ajaxSave'); ?>";
+    var urlEdit = "<?= site_url('kategori/ajaxEdit/'); ?>";
+    var urlUpdate = "<?= site_url('kategori/ajaxUpdate'); ?>";
+    var urlDelete = "<?= site_url('kategori/ajaxDelete/'); ?>";
 </script>
 <script src = "<?= base_url();?>/ajax/ajaxKategori.js "> </script>
 <section class="content-header">

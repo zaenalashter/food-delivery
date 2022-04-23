@@ -62,11 +62,22 @@ class Kategori extends BaseController
         $data = [];
         $no = $start + 1;
         foreach ($list as $temp){
+            $aksi = '
+            <div class="text-center">
+            <a href="javascript:void(0)" class="btn btn-warning btn-sm" data-toggle="toooltip" title="Edit Data" onclick="ajaxEdit('.$temp['id'].')">
+                <i class="fa fa-pencil"></i>
+            </a>
+            <a href="javascript:void(0)" class="btn btn-danger btn-sm" data-toggle="toooltip" title="Edit Data" onclick="ajaxDelete('.$temp['id'].')">
+                <i class="fa fa-trash"></i>
+            </a>
+            </div>
+            ';
+
             $row = [];
             $row[] = $no++;
             $row[] = $temp['nama_kategori'];
             $row[] = formatStatus($temp['status']);
-            $row[] = '';
+            $row[] = $aksi;
 
             $data[] = $row;
         }
@@ -87,6 +98,38 @@ class Kategori extends BaseController
         ];
 
         if($this->kategori->save($data)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+    }
+
+    public function ajaxEdit($id)
+    {
+        $kategori = $this->kategori->find($id);
+        echo json_encode($kategori);
+    }
+
+    public function ajaxUpdate()
+    {
+        $this->_validate('update');
+
+        $id = $this->request->getVar('id');
+        $data = [
+            'nama_kategori' => $this->request->getVar('nama_kategori'),
+            'status' => '1',
+        ];
+
+        if($this->kategori->update($id, $data)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+    }
+
+    public function ajaxDelete($id)
+    {
+        if($this->kategori->delete($id)){
             echo json_encode(['status' => true]);
         }else{
             echo json_encode(['status' => false]);
