@@ -1,5 +1,6 @@
 <script>
-    var urlList = "<?= site_url('produk/ajaxList'); ?>"; 
+    var urlList = "<?= site_url('produk/ajaxList'); ?>";
+    var urlImgDefault = "<?= base_url('/images/default.png'); ?>";
     var urlSave = "<?= site_url('produk/ajaxSave'); ?>";
     var urlEdit = "<?= site_url('produk/ajaxEdit/'); ?>";
     var urlUpdate = "<?= site_url('produk/ajaxUpdate'); ?>";

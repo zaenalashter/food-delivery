@@ -101,4 +101,79 @@ class Produk extends BaseController
         echo json_encode($output);
         exit();
     }
+
+    public function ajaxSave()
+    {
+        $this->_validate('save');
+
+        $data = [
+            'nama_produk' => $this->request->getVar('nama_produk'),
+            'harga' => $this->request->getVar('harga'),
+            'deskripsi' => $this->request->getVar('deskripsi'),
+            'kategori' => $this->request->getVar('kategori'),
+            'gambar' => uploadImage($this->request->getFile('gambar')),
+            'status' => '1',
+        ];
+
+        if($this->produk->save($data)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+    }
+
+    public function _validate($method)
+    {
+        if(!$this->validate($this->produk->getRulesValidation($method)))
+        {
+            $validation = \Config\Services::validation();
+
+            $data = [];
+            $data['error_string'] = [];
+            $data['inputerror'] = [];
+            $data['status'] = true;
+
+            if($validation->hasError('nama_produk'))
+            {
+                $data['inputerror'][] = 'nama_produk';
+                $data['error_string'][] = $validation->getError('nama_produk');
+                $data['status'] = false;
+            }
+
+            if($validation->hasError('harga'))
+            {
+                $data['inputerror'][] = 'harga';
+                $data['error_string'][] = $validation->getError('harga');
+                $data['status'] = false;
+            }
+
+            if($validation->hasError('deskripsi'))
+            {
+                $data['inputerror'][] = 'deskripsi';
+                $data['error_string'][] = $validation->getError('deskripsi');
+                $data['status'] = false;
+            }
+
+            if($validation->hasError('kategori'))
+            {
+                $data['inputerror'][] = 'kategori';
+                $data['error_string'][] = $validation->getError('kategori');
+                $data['status'] = false;
+            }
+
+            if($validation->hasError('gambar'))
+            {
+                $data['inputerror'][] = 'gambar';
+                $data['error_string'][] = $validation->getError('gambar');
+                $data['status'] = false;
+            }
+
+            if($data['status'] == false)
+            {
+                echo json_encode($data);
+                exit();
+            }
+        }
+    }
+
 }
