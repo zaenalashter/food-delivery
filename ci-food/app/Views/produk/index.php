@@ -1,11 +1,12 @@
 <script>
     var urlList = "<?= site_url('produk/ajaxList'); ?>";
-    var urlImgDefault = "<?= base_url('/images/default.png'); ?>";
     var urlSave = "<?= site_url('produk/ajaxSave'); ?>";
     var urlEdit = "<?= site_url('produk/ajaxEdit/'); ?>";
-    var urlUpdate = "<?= site_url('produk/ajaxUpdate'); ?>";
+    var urlUpdate = "<?= site_url('produk/ajaxUpdate/'); ?>";
     var urlDelete = "<?= site_url('produk/ajaxDelete/'); ?>";
     var urlStatus = "<?= site_url('produk/ajaxStatus/'); ?>";
+    var urlImg = "<?= base_url('uploads/img'); ?>/";
+    var urlImgDefault = "<?= base_url('/images/default.png'); ?>";
 </script>
 <script src = "<?= base_url();?>/ajax/ajaxProduk.js "> </script>
 <section class="content-header">

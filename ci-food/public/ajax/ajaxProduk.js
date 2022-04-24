@@ -75,6 +75,57 @@ function ajaxSave(){
     });
 }
 
+function ajaxEdit(id){
+    save_method = 'edit';
+    $('#modal-form form')[0].reset();
+    $('.form-group').removeClass('has-error');
+    $('.help-block').empty();
+
+    $.ajax({
+        url : urlEdit + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data){
+            $('[name="id"]').val(data.id);
+            $('[name="nama_produk"]').val(data.nama_produk);
+            $('[name="harga"]').val(data.harga);
+            $('[name="kategori"]').val(data.kategori);
+            $('[name="deskripsi"]').val(data.deskripsi);
+
+            if(data.gambar == '' || data.gambar == null){
+                $('.img-preview').html('<label class="col-form-label col-form-label-sm">tidak ada gambar.</label>');
+            }else{
+                $('.img-preview').attr('src', urlImg + data.gambar);
+            }
+            
+            $('#modal-form').modal('show');
+            $('.modal-title').text('Edit Produk');
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        }
+    });
+}
+
+function ajaxDelete(id){
+    if(confirm('Apakah anda yakin akan menghapus data ini?')){
+        $.ajax({
+            url : urlDelete + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data){
+                if(data.status){
+                    success('Data berhasil dihapus');
+                    reload_table();
+                }else{
+                    error('Data gagal dihapus');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            }
+        });
+    }
+}
+
 function imgPreview(){
     const gambar = document.querySelector('#gambar');
     const imgPreview = document.querySelector('.img-preview');
@@ -84,5 +135,25 @@ function imgPreview(){
 
     fileImg.onload = function(e){
         imgPreview.src = e.target.result;
+    }
+}
+
+function ajaxStatus(id){
+    if(confirm('Apakah anda yakin untuk mengubah status?')){
+        $.ajax({
+            url : urlStatus + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data){
+                if(data.status){
+                    success('Status berhasil diubah');
+                    reload_table();
+                }else{
+                    error('Status gagal diubah');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            }
+        });
     }
 }

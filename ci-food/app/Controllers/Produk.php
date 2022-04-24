@@ -102,6 +102,13 @@ class Produk extends BaseController
         exit();
     }
 
+    public function ajaxEdit($id)
+    {
+        $data = $this->produk->find($id);
+        echo json_encode($data);
+        exit();
+    }
+
     public function ajaxSave()
     {
         $this->_validate('save');
@@ -120,6 +127,67 @@ class Produk extends BaseController
         }else{
             echo json_encode(['status' => false]);
         }
+    }
+
+    public function ajaxUpdate()
+    {
+        $this->_validate('update');
+
+        $id = $this-> request->getVar('id');
+        $produk = $this->produk->find($id);
+
+        if($this->request->getVar('gambar') != ''){
+            $gambar = $produk['gambar'];
+        }else{
+            unlink('./uploads/img/' . $produk['gambar']);
+            $gambar = uploadImage($this->request->getFile('gambar'));
+        }
+
+        $data = [
+            'id' => $id,
+            'nama_produk' => $this->request->getVar('nama_produk'),
+            'harga' => $this->request->getVar('harga'),
+            'deskripsi' => $this->request->getVar('deskripsi'),
+            'kategori' => $this->request->getVar('kategori'),
+            'gambar' =>$gambar,
+        ];
+
+        if($this->produk->save($data)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+    }
+
+    public function ajaxDelete($id)
+    {
+        $produk = $this->produk->find($id);
+        unlink('./uploads/img/' . $produk['gambar']);
+
+        if($this->produk->delete($id)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+    }
+
+    public function ajaxStatus($id)
+    {
+        $produk = $this->produk->find($id);
+        $data['id'] = $id;
+
+        if($produk['status'] == '0'){
+            $data['status'] = '1';
+        }else{
+            $data['status'] = '0';
+        }
+
+        if($this->produk->save($data)){
+            echo json_encode(['status' => true]);
+        }else{
+            echo json_encode(['status' => false]);
+        }
+
     }
 
     public function _validate($method)

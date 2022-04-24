@@ -116,7 +116,7 @@ function ajaxDelete(id){
     }
 }
 function ajaxStatus(id){
-    if(confirm('Apakah anda yakin untuk menguubah status?')){
+    if(confirm('Apakah anda yakin untuk mengubah status?')){
         $.ajax({
             url : urlStatus + id,
             type: "GET",
